@@ -6,7 +6,7 @@ import (
 	"os"
 	"strconv"
 
-	"github.com/fopina/degiro-trailing-stop/degiro"
+	"github.com/fopina/degiro-trailing-stop/bot"
 	flag "github.com/spf13/pflag"
 )
 
@@ -25,8 +25,12 @@ func main() {
 		return
 	}
 
-	c := degiro.NewAPIClient(*usernamePtr, *passwordPtr)
-	fmt.Println(c.Login())
+	b := bot.NewBot(*usernamePtr, *passwordPtr)
+	err := b.Login()
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println(b.Test())
 }
 
 func LookupEnvOrString(key string, defaultVal string) string {
